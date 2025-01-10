@@ -2,6 +2,9 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
+const $sprite = document.querySelector('#sprite')
+const $bricks = document.querySelector('#bricks')
+
 canvas.width = 408
 canvas.height = 400
 
@@ -36,6 +39,32 @@ let dy = -2
 
     const paddleSensitivity = 8
 
+
+//BRICKS VARIABLES
+
+const bricksRowCount = 6;
+const bricksColumnCount = 13;
+const bricksWidth = 30;
+const bricksHeight = 14;
+const brickPadding = 2;
+const brickOffsetTop = 80;
+const brickOffsetLeft = 30;
+const bricks = [];
+
+for (let c = 0; c < bricksColumnCount; c++){
+    bricks[c] = [] //inicializamos con array vacio
+for (let r = 0; r < bricksRowCount; r++){
+    const brickX = c * (bricksWidth + brickPadding) +
+    brickOffsetLeft
+    const brickY = c * (bricksHeight + brickPadding) +
+    brickOffsetTop
+
+}
+}
+
+
+
+
 function drawBall(){
 
     ctx.beginPath()
@@ -47,14 +76,20 @@ function drawBall(){
 
 }
 function drawPaddle (){
-    ctx.fillStyle = "red"
-    ctx.fillRect(
-        paddleX,
-        paddleY,
-        paddleWidth,
-        paddleHeight
-    )
 
+//cambiar paddle
+    ctx.drawImage(
+        $sprite, //img
+        29, //coordenada X de recorte
+        174, //coordenada y de recorte
+        paddleWidth, //tama;o de recorte
+        paddleHeight, //tama;o de recorte
+        paddleX, //posicion x del dibujo
+        paddleY, //posicion y del dibujo
+        paddleWidth, //ancho del dibujo
+        paddleHeight //alto del dibujo
+
+    )
 
 }
 function drawBricks(){}
