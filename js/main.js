@@ -32,7 +32,7 @@ let dy = -2
 
 
     let paddleX = (canvas.width - paddleWidth) / 2
-    let paddleY = canvas.height - paddleHeight -10
+    let paddleY = canvas.height - paddleHeight - 10
 
     let rightPressed = false
     let leftPressed = false
@@ -42,26 +42,39 @@ let dy = -2
 
 //BRICKS VARIABLES
 
-const bricksRowCount = 6;
-const bricksColumnCount = 13;
-const bricksWidth = 30;
-const bricksHeight = 14;
+const brickRowCount = 6;
+const brickColumnCount = 13;
+const brickWidth = 30;
+const brickHeight = 14; 
 const brickPadding = 2;
 const brickOffsetTop = 80;
-const brickOffsetLeft = 30;
+const brickOffsetLeft = 16;
 const bricks = [];
 
-for (let c = 0; c < bricksColumnCount; c++){
+
+const BRICK_STATUS = { 
+    ACTIVE: 1,
+    DESTROYED: 0
+}
+
+for (let c = 0; c < brickColumnCount; c++){
     bricks[c] = [] //inicializamos con array vacio
-for (let r = 0; r < bricksRowCount; r++){
-    const brickX = c * (bricksWidth + brickPadding) +
+for (let r = 0; r < brickRowCount; r++){
+    const brickX = c * (brickWidth + brickPadding) +
     brickOffsetLeft
-    const brickY = c * (bricksHeight + brickPadding) +
+    const brickY = r * (brickHeight + brickPadding) +
     brickOffsetTop
+    //asignar color
+    const random = Math.floor(Math.random() * 8)
 
+    bricks[c][r] = {
+        x:brickX,
+        y:brickY, 
+        status:BRICK_STATUS.ACTIVE, 
+        color: random
 }
 }
-
+}
 
 
 
@@ -92,7 +105,23 @@ function drawPaddle (){
     )
 
 }
-function drawBricks(){}
+function drawBricks(){
+    for (let c = 0; c < brickColumnCount; c++){
+    for (let r = 0; r < brickRowCount; r++){
+        const currentBrick = bricks[c][r]
+        if (currentBrick.status === BRICK_STATUS.DESTROYED)
+            continue;
+        ctx.fillStyle = 'yellow'
+        ctx.rect(
+            currentBrick.x,
+            currentBrick.y,
+            brickWidth,
+            brickHeight
+        )
+        ctx.fill()
+    }
+    }
+}
 
 function collisionDetection(){ }
 
