@@ -21,10 +21,13 @@ let y = canvas.height - 30
 
 //Ball Speed
 
-let dx = 2
-let dy = -2
+let dx = -3
+let dy = -3
 
 //PADDLE VARIABLES
+
+const paddleSensitivity = 8
+
 
     const paddleHeight = 10;
     const paddleWidth = 50;
@@ -37,7 +40,6 @@ let dy = -2
     let rightPressed = false
     let leftPressed = false
 
-    const paddleSensitivity = 8
 
 
 //BRICKS VARIABLES
@@ -86,8 +88,8 @@ function drawBall(){
     ctx.fill()
     ctx.closePath()
 
-
 }
+
 function drawPaddle (){
 
 //cambiar paddle
@@ -105,6 +107,7 @@ function drawPaddle (){
     )
 
 }
+
 function drawBricks(){
     for (let c = 0; c < brickColumnCount; c++){
     for (let r = 0; r < brickRowCount; r++){
@@ -131,6 +134,14 @@ function drawBricks(){
     }
 
 }
+
+function drawUI(){
+    ctx.fillText(`FPS: ${FramePerSec}`, 5, 10)
+}
+
+
+
+
 
 function collisionDetection(){ 
     for (let c = 0; c < brickColumnCount; c++){
@@ -188,8 +199,9 @@ function ballMovement (){
         dy = -dy
     }    
     else if (
-        y + dy > canvas.height - ballRadius
+        y + dy > canvas.height - ballRadius || y + dy > paddleY + paddleHeight
     ){
+        gameOver = true
         console.log('Game Over')
         document.location.reload()
 
@@ -223,29 +235,64 @@ function initEvents (){
 
     function keyDownHandler(event){
         const {key} = event
-        if (key === 'Right' || key === 'ArrowRight'){
+        if (key === 'Right' || key === 'ArrowRight' || key.toLowerCase() === 'd'){
             rightPressed = true
-    } else if (key === 'Left' || key === 'ArrowLeft'){
+    } else if (key === 'Left' || key === 'ArrowLeft' || key.toLowerCase() === 'a'){
         leftPressed = true
     }
     }
 
     function keyUpHandler(event){
         const {key} = event
-        if (key === 'Right' || key === 'ArrowRight'){
+        if (key === 'Right' || key === 'ArrowRight' || key.toLowerCase() === 'd'){
             rightPressed = false
-    } else if (key === 'Left' || key === 'ArrowLeft'){
+    } else if (key === 'Left' || key === 'ArrowLeft' || key.toLowerCase() === 'a'){
         leftPressed = false
     }
 
     }
 }
 
+const fps = 60
+
+let msPrev = window.performance.now()
+let msFPSPrev = window.performance.now() + 1000;
+const msPerFrame = 1000 / fps
+let frames = 0
+let FramePerSec = fps
+
+let gameOver = false;
+
+
+
 function draw(){
+
+    if (gameOver)return
+
+    window.requestAnimationFrame(draw)
+    const msNow = window.performance.now()
+    const msPassed = msNow - msPrev
+
+    if(msPassed < msPerFrame) return
+
+    const excessTime = msPassed % msPerFrame
+    msPrev = msNow - excessTime
+
+    frames ++
+
+    if (msFPSPrev < msNow)
+    {
+        msFPSPrev = window.performance.now() + 1000
+        FramePerSec = frames;
+        frames = 0;
+    }
+
+
     cleanCanvas()
     drawBall()
     drawPaddle()
     drawBricks()
+    drawUI()
 //drawSCore()
 //drawLive()
 
@@ -255,6 +302,7 @@ function draw(){
     paddleMovement()
 
     window.requestAnimationFrame(draw)
+
 }
 
 draw()

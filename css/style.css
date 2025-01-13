@@ -1,5 +1,7 @@
 body{
-    background-color: rgb(63, 62, 62);
+    background-color: #f0f0f0;
+    display: grid;
+    place-content: center;
 }
 
 canvas{
@@ -8,4 +10,5 @@ canvas{
     background: url(../bkg.png) repeat;
     margin: 0 auto;
     display: block;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
 }
