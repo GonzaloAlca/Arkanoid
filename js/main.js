@@ -5,7 +5,7 @@ const ctx = canvas.getContext('2d');
 const $sprite = document.querySelector('#sprite')
 const $bricks = document.querySelector('#bricks')
 
-canvas.width = 408
+canvas.width = 448
 canvas.height = 400
 
 //Game Variables
@@ -44,9 +44,9 @@ let dy = -2
 
 const brickRowCount = 6;
 const brickColumnCount = 13;
-const brickWidth = 30;
-const brickHeight = 14; 
-const brickPadding = 2;
+const brickWidth = 32;
+const brickHeight = 16; 
+const brickPadding = 0;
 const brickOffsetTop = 80;
 const brickOffsetLeft = 16;
 const bricks = [];
@@ -111,19 +111,50 @@ function drawBricks(){
         const currentBrick = bricks[c][r]
         if (currentBrick.status === BRICK_STATUS.DESTROYED)
             continue;
-        ctx.fillStyle = 'yellow'
-        ctx.rect(
+        
+        const clipX = currentBrick.color * 32
+        ctx.drawImage(
+            $bricks,
+            clipX,
+            0,
+            brickWidth,
+            brickHeight,
             currentBrick.x,
             currentBrick.y,
             brickWidth,
             brickHeight
+            
         )
-        ctx.fill()
+
+
     }
     }
+
 }
 
-function collisionDetection(){ }
+function collisionDetection(){ 
+    for (let c = 0; c < brickColumnCount; c++){
+        for (let r = 0; r < brickRowCount; r++){
+            const currentBrick = bricks[c][r]
+            if (currentBrick.status === BRICK_STATUS.DESTROYED)
+                continue; 
+            const isBallSameXAsBrick = 
+                x > currentBrick.x &&
+                x < currentBrick.x + brickWidth
+                
+            const isBallSameYAsBrick = 
+                y > currentBrick.y &&
+                y < currentBrick.y + brickHeight
+            
+            
+            
+                if ( isBallSameXAsBrick && isBallSameYAsBrick){
+                    dy = -dy
+                    currentBrick.status = BRICK_STATUS.DESTROYED
+                }
+
+        }}
+}
 
 function ballMovement (){
     //rebote laterial
