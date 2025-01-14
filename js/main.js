@@ -90,6 +90,8 @@ function drawBall(){
 
 }
 
+
+
 function drawPaddle (){
 
 //cambiar paddle

@@ -1,0 +1,67 @@
+body{
+    background-image: url(../bg\ stars.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+
+.home{
+    width: 223px; 
+    height: 53px; 
+    background-image: url('../sprite.png'); 
+    background-position: 0 0; 
+    background-size: 481px 287px;
+    position: absolute;
+    top: 250px;
+
+    transform: scale(3);
+    transform-origin: top left;
+    image-rendering: pixelated;
+
+    animation: zoom 2s infinite ease-in-out;
+    transform-origin: center;
+}
+
+.menu{
+    font-size: 40px;
+    
+}
+
+.menu ul li{
+    list-style: none;
+    font-weight: bold;
+}
+.menu ul li a{
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+@keyframes zoom{
+    0%, 100% {
+        transform: scale(3);
+    }
+
+    50%{
+        transform: scale(3.2);
+    }
+
+}
+
