@@ -1,5 +1,5 @@
 body{
-    background-image: url(../bg\ stars.jpg);
+    background-image: url(../img/bg\ stars.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     margin: 0;
@@ -13,7 +13,7 @@ body{
 .home{
     width: 223px; 
     height: 53px; 
-    background-image: url('../sprite.png'); 
+    background-image: url('../img/sprite.png'); 
     background-position: 0 0; 
     background-size: 481px 287px;
     position: absolute;
